@@ -5,12 +5,12 @@ import ru.mtsbank.abstractClasses.Predator;
 import java.math.BigDecimal;
 
 public class Shark extends Predator {
-    Shark(String breed,String name,String character){
+    public Shark(String breed, String name, String character){
         this.name = name;
         this.breed = breed;
-        this.cost = null;
         this.character = character;
         System.out.println(name);
+
     }
 
     @Override

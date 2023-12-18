@@ -5,7 +5,7 @@ import ru.mtsbank.abstractClasses.Pet;
 import java.math.BigDecimal;
 
 public class Dog extends Pet {
-    Dog(String breed,String name,BigDecimal cost,String character){
+    public Dog(String breed, String name, BigDecimal cost, String character){
         this.name = name;
         this.breed = breed;
         this.cost = cost;

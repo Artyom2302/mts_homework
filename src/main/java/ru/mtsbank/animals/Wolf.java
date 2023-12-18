@@ -8,7 +8,6 @@ public class Wolf extends Predator {
     public Wolf(String breed, String name, String character){
         this.name = name;
         this.breed = breed;
-        this.cost = null;
         this.character = character;
         System.out.println(name);
     }

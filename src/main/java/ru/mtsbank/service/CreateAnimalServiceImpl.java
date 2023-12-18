@@ -12,7 +12,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService{
         int i = 1;
         Animal animal;
         do {
-            animal= new Cat("Порода №"+i,"Кошка №"+i, BigDecimal.valueOf(2000*i),"Характер №"+i);
+            animal= createRandomAnimal(i);
             System.out.println("------");
             i++;
         }while (i<11);
@@ -21,7 +21,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService{
     public void createAnimals(int number){
         Animal animal;
         for (int i = 1; i <number+1; i++) {
-            animal= new Wolf("Порода №"+i,"Волк №"+i,"Характер №"+i);
+            animal = createRandomAnimal(i);
             System.out.println("------");
         }
     }
