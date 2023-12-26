@@ -1,6 +1,7 @@
 package ru.mtsbank;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  * Интерфейс животные, реализует методы характерные для животных
@@ -32,4 +33,6 @@ public interface Animal {
      * @return Возвращает строку, содержащую характер животного
      * */
     String getCharacter();
+    LocalDate getBirthDate();
+    public void setBirthDate(LocalDate birthDate);
 }

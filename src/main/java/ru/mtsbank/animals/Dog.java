@@ -3,6 +3,7 @@ package ru.mtsbank.animals;
 import ru.mtsbank.abstractClasses.Pet;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class Dog extends Pet {
     public Dog(String breed, String name, BigDecimal cost, String character){
@@ -32,4 +33,6 @@ public class Dog extends Pet {
     public String getCharacter() {
         return character;
     }
+
+
 }

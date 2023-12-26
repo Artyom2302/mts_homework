@@ -11,33 +11,59 @@ import java.math.BigDecimal;
 import static java.lang.Math.round;
 
 public interface CreateAnimalService {
-    default Animal createRandomAnimal(int i){
+    public enum AnimalType{
+        CAT,
+        DOG,
+        WOLF,
+        SHARK
+    }
+    default AnimalType getRandomAnimalType(int i){
         switch ((int)(round(Math.random()*4) % 4)){
             case 0:{
-                return new Dog("Порода №"+i,"Собака №"+i, BigDecimal.valueOf(3000*i),"Добрый");
+                return AnimalType.WOLF;
             }
             case 1:{
-                return new Cat("Порода №"+i,"Кошка №"+i, BigDecimal.valueOf(2000*i),"Гордый");
+                return AnimalType.CAT;
             }
             case 2:{
-                return new Wolf("Порода №"+i,"Волк №"+i,"Злой");
+                return AnimalType.DOG;
             }
             case 3:{
-                return new Shark("Порода №"+i,"Акула №"+i,"Опасная");
+                return AnimalType.SHARK;
             }
-            default:{
+        }
+        return AnimalType.CAT;
+    }
+    default Animal createRandomAnimal(AnimalType type){
+        Animal animal = null;
+        switch (type){
+            case DOG:{
+                animal = new Dog("Хаски","Собака", BigDecimal.valueOf(3000),"Добрый");
+                break;
+            }
+            case CAT:{
+                animal = new Cat("Британец","Кошка", BigDecimal.valueOf(2000),"Гордый");
+                break;
+            }
+            case WOLF:{
+                animal = new Wolf("Северный","Волк","Злой");
+                break;
+            }
+            case SHARK:{
+                animal = new Shark("Молот","Акула","Опасная");
                 break;
             }
         }
-        return null;
+        return animal;
     }
-    default  void createAnimals(){
-        int i = 1;
-
-        while (i<11){
-            Animal animal = createRandomAnimal(i);
+    default  Animal[] createAnimals(){
+        Animal[] animals = new Animal[10];
+        int i = 0;
+        while (i<10){
+            animals[i] = createRandomAnimal(getRandomAnimalType(i));
             System.out.println("------");
             i++;
         }
+        return animals;
     }
 }

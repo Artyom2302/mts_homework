@@ -8,24 +8,26 @@ import java.math.BigDecimal;
 
 public class CreateAnimalServiceImpl implements CreateAnimalService{
     @Override
-    public void createAnimals() {
-        int i = 1;
-        Animal animal;
+    public Animal[] createAnimals() {
+        int i = 0;
+        Animal[] animals = new Animal[10];
         do {
-            animal= createRandomAnimal(i);
+            animals[i] = createRandomAnimal(getRandomAnimalType(i));
             System.out.println("------");
             i++;
-        }while (i<11);
+        }while (i<10);
+        return animals;
     }
 
-    public void createAnimals(int number){
-        Animal animal;
-        for (int i = 1; i <number+1; i++) {
-            animal = createRandomAnimal(i);
+    public Animal[] createAnimals(int number){
+        Animal[] animals = new Animal[10];
+        for (int i = 0; i <number; i++) {
+            animals[i] = createRandomAnimal(getRandomAnimalType(i));
             System.out.println("------");
         }
+        return animals;
     }
-    public void createAnimalsImpl(){
-        CreateAnimalService.super.createAnimals();
+    public Animal[] createAnimalsImpl(){
+        return CreateAnimalService.super.createAnimals();
     }
 }
