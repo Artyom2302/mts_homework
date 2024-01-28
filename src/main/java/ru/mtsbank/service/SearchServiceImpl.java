@@ -3,7 +3,6 @@ package ru.mtsbank.service;
 import ru.mtsbank.Animal;
 
 import java.time.LocalDate;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class SearchServiceImpl implements SearchService {
      * @return строка с именами дубликатов животных
      */
     @Override
-    public void findDublicate(Animal[] animals) {
+    public List<Animal> findDublicate(Animal[] animals) {
         List<Animal> dublicates = new ArrayList<>();
         for (int i = 0; i < animals.length; i++) {
             for (int j = i+1; j < animals.length; j++) {
@@ -56,6 +55,10 @@ public class SearchServiceImpl implements SearchService {
                     }
             }
         }
+        return dublicates;
+    }
+    public void printDublicate(Animal[] animals){
+        List<Animal> dublicates = findDublicate(animals);
         for(Animal animal:dublicates){
             System.out.println(animal.toString());
         }

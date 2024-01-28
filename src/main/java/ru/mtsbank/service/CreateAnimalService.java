@@ -7,6 +7,7 @@ import ru.mtsbank.animals.Shark;
 import ru.mtsbank.animals.Wolf;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import static java.lang.Math.round;
 
@@ -38,19 +39,19 @@ public interface CreateAnimalService {
         Animal animal = null;
         switch (type){
             case DOG:{
-                animal = new Dog("Хаски","Собака", BigDecimal.valueOf(3000),"Добрый");
+                animal = new Dog("Хаски","Собака", BigDecimal.valueOf(3000),"Добрый",LocalDate.now().minusDays((long)(365*5*Math.random())));
                 break;
             }
             case CAT:{
-                animal = new Cat("Британец","Кошка", BigDecimal.valueOf(2000),"Гордый");
+                animal = new Cat("Британец","Кошка", BigDecimal.valueOf(2000),"Гордый",LocalDate.now().minusDays((long)(365*5*Math.random())));
                 break;
             }
             case WOLF:{
-                animal = new Wolf("Северный","Волк","Злой");
+                animal = new Wolf("Северный","Волк","Злой",LocalDate.now().minusDays((long)(365*5*Math.random())));
                 break;
             }
             case SHARK:{
-                animal = new Shark("Молот","Акула","Опасная");
+                animal = new Shark("Молот","Акула","Опасная",LocalDate.now().minusDays((long)(365*5*Math.random())));
                 break;
             }
         }
