@@ -48,6 +48,7 @@ public class SearchServiceTest {
 
     @ParameterizedTest
     @ValueSource(ints = {1,2,3})
+    @DisplayName("Тест для поиска животных старше опр. года")
     void findOlderAnimalTest(int N){
         animals[0] = new Dog("1","1",BigDecimal.valueOf(1000),"1",LocalDate.now().minusYears(N+1));
         animals[1] = new Dog("2","2",BigDecimal.valueOf(1000),"2",LocalDate.now());
@@ -56,6 +57,7 @@ public class SearchServiceTest {
         Assertions.assertArrayEquals(new Animal[]{animals[0]},searchService.findOlderAnimal(animals,LocalDate.now().minusYears(N)));
     }
     @Test
+    @DisplayName("Тест для дубликатов")
     void findDublicateTest(){
         animals[0] = new Dog("1","1",BigDecimal.valueOf(1000),"1",LocalDate.now());
         animals[1] = new Dog("1","1",BigDecimal.valueOf(1000),"1",LocalDate.now());
