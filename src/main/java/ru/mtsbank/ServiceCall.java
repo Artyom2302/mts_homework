@@ -1,15 +1,12 @@
 package ru.mtsbank;
 
-import ru.mtsbank.animals.Cat;
-import ru.mtsbank.animals.Wolf;
 import ru.mtsbank.service.CreateAnimalServiceImpl;
 import ru.mtsbank.service.SearchServiceImpl;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 
-public class Main {
+public class ServiceCall {
     public static void main(String[] args) {
           CreateAnimalServiceImpl animalService = new CreateAnimalServiceImpl();
 //        HW-3
