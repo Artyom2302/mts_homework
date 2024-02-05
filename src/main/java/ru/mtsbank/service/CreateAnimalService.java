@@ -1,5 +1,6 @@
 package ru.mtsbank.service;
 
+import org.springframework.stereotype.Service;
 import ru.mtsbank.Animal;
 import ru.mtsbank.animals.Cat;
 import ru.mtsbank.animals.Dog;
@@ -18,8 +19,9 @@ public interface CreateAnimalService {
         WOLF,
         SHARK
     }
-    default AnimalType getRandomAnimalType(int i){
-        switch ((int)(round(Math.random()*4) % 4)){
+    default AnimalType getRandomAnimalType(){
+        int choice = (int)(round(Math.random()*4) % 4);
+        switch (choice){
             case 0:{
                 return AnimalType.WOLF;
             }
@@ -57,11 +59,12 @@ public interface CreateAnimalService {
         }
         return animal;
     }
+    Animal getRandomAnimal();
     default  Animal[] createAnimals(){
         Animal[] animals = new Animal[10];
         int i = 0;
         while (i<10){
-            animals[i] = createRandomAnimal(getRandomAnimalType(i));
+            animals[i] = createRandomAnimal(getRandomAnimalType());
             System.out.println("------");
             i++;
         }
