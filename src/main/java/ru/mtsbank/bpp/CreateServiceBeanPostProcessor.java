@@ -11,7 +11,7 @@ import ru.mtsbank.service.CreateAnimalServiceImpl;
 public class CreateServiceBeanPostProcessor implements BeanPostProcessor{
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        if ("createAnimalServiceImpl".equals(beanName)){
+        if (bean instanceof CreateAnimalServiceImpl){
             CreateAnimalServiceImpl createAnimalServiceImpl = (CreateAnimalServiceImpl) bean;
             createAnimalServiceImpl.setType(createAnimalServiceImpl.getRandomAnimalType());
             return createAnimalServiceImpl;

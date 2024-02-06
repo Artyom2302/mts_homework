@@ -85,7 +85,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     public void printDuplicate() {
         Set<Animal> duplicates = findDuplicate();
         for(Animal animal:duplicates){
-            System.out.println("Животное:"+animal.getName());
+            System.out.println("Р–РёРІРѕС‚РЅРѕРµ:"+animal.getName());
         }
     }
 }

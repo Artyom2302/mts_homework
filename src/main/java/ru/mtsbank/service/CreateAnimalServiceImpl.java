@@ -15,10 +15,6 @@ import java.time.LocalDate;
 @Service
 @Scope("prototype")
 public class CreateAnimalServiceImpl implements CreateAnimalService{
-
-
-
-
     AnimalType type;
     public void setType(AnimalType type) {
         this.type = type;
