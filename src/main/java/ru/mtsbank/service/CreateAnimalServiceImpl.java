@@ -18,10 +18,15 @@ public class CreateAnimalServiceImpl implements CreateAnimalService{
 
 
 
+
     AnimalType type;
     public void setType(AnimalType type) {
         this.type = type;
     }
+    public AnimalType getType() {
+        return type;
+    }
+
     public Animal getRandomAnimal(){
         return CreateAnimalService.super.createRandomAnimal(type);
     }

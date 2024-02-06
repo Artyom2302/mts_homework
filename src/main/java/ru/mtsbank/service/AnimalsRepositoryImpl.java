@@ -19,8 +19,12 @@ import java.util.Set;
 
 @Repository
 public class AnimalsRepositoryImpl implements AnimalsRepository {
-    Animal[] animals;
 
+
+    Animal[] animals;
+    public Animal[] getAnimals() {
+        return animals;
+    }
     @Lookup
     public CreateAnimalService getCreateAnimalService() {
         return null;
