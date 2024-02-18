@@ -1,6 +1,7 @@
 package ru.mtsbank.service;
 
 import org.springframework.beans.factory.annotation.Lookup;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import ru.mtsbank.animals.Animal;
