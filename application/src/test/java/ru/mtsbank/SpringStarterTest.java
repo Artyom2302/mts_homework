@@ -2,18 +2,16 @@ package ru.mtsbank;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-
+import org.springframework.test.context.ActiveProfiles;
 import ru.mtsbank.config.CreateServiceAutoConfiguration;
 import ru.mtsbank.service.AnimalsRepositoryImpl;
 import ru.mtsbank.service.CreateAnimalServiceImpl;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class SpringContextTest {
+@ActiveProfiles("test")
+public class SpringStarterTest {
     @Autowired
     CreateAnimalServiceImpl createService;
     @Autowired
@@ -31,9 +29,7 @@ public class SpringContextTest {
     }
     @Test
     void testConfigInit(){
-        Assertions.assertArrayEquals(new String[]{"persik","barsik","pushok"},configuration.getProperties().getCatNames());
-        Assertions.assertArrayEquals(new String[]{"sharik","persik","sobaka"},configuration.getProperties().getDogNames());
-
+        Assertions.assertArrayEquals(new String[]{"Кот №1","Кот №2", "Кот №3"},configuration.getProperties().getCatNames());
+        Assertions.assertArrayEquals(new String[]{"sharik-Test","persik-Test","sobaka-Test"},configuration.getProperties().getDogNames());
     }
-
 }
