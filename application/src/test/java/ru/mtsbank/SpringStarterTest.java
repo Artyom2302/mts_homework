@@ -21,11 +21,11 @@ public class SpringStarterTest {
 
     @Test
     void postProcessorTest(){
-        Assertions.assertNotEquals(null,createService.getType());
+        Assertions.assertNotNull(createService.getType());
     }
     @Test
     void postConstructTest(){
-        Assertions.assertNotEquals(null,repository.getAnimals());
+        Assertions.assertNotNull(repository.getAnimals());
     }
     @Test
     void testConfigInit(){

@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import ru.mtsbank.animals.Animal;
 
+import java.time.LocalDate;
+import java.util.Map;
 import java.util.Set;
 
 public class AnimalRepositoryScheduler {
@@ -15,26 +17,20 @@ public class AnimalRepositoryScheduler {
         //Вызов методов
         //1)findLeapYearNames
         System.out.println("Поиск  животных високосного года");
-        String[] names = animalsRepository.findLeapYearNames();
-        for(String str:names){
-            System.out.println(names);
+        var names = animalsRepository.findLeapYearNames();
+        for(Map.Entry<String, LocalDate> keyValue:names.entrySet()){
+            System.out.println(keyValue.getKey()+" : "+keyValue.getValue());
         }
         System.out.println();
 
         //2)findOlderAnimal
         System.out.println("Поиск старших животных");
-        Animal[] animals = animalsRepository.findOlderAnimal(3);
-        for(Animal animal: animals){
-            System.out.println("Животное:"+animal.getName()+"/год рождения: "+animal.getBirthDate()+"|");
+        Map<Animal, Integer> animals = animalsRepository.findOlderAnimal(3);
+        for(Map.Entry<Animal, Integer> animal: animals.entrySet()){
+            System.out.println("Животное:"+animal.getKey().getName()+"/Возраст: "+animal.getValue()+"|");
         }
         System.out.println();
 
-        //3)findDuplicate()
-        System.out.println("Поиск дубликатов");
-        Set<Animal> animalsDuplicate = animalsRepository.findDuplicate();
-        for(Animal animal: animals){
-            System.out.println("Животное:"+animal.getName());
-        }
 
         //4)printDuplicate()
         System.out.println("Вывод дубликатов");

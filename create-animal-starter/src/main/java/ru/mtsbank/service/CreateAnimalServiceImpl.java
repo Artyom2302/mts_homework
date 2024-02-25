@@ -5,6 +5,10 @@ import ru.mtsbank.animals.Cat;
 import ru.mtsbank.animals.Dog;
 import ru.mtsbank.config.CreateServiceProperties;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class CreateAnimalServiceImpl implements CreateAnimalService {
@@ -46,27 +50,40 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
     }
 
     @Override
-    public Animal[] createAnimals() {
-        int i = 0;
-        Animal[] animals = new Animal[10];
-        do {
-            animals[i] = createRandomAnimal(getRandomAnimalType());
-            System.out.println("------");
-            i++;
-        }while (i<10);
-        return animals;
-    }
-
-
-    public Animal[] createAnimals(int number){
-        Animal[] animals = new Animal[10];
-        for (int i = 0; i <number; i++) {
-            animals[i] = createRandomAnimal(getRandomAnimalType());
-            System.out.println("------");
+    public Map<String, List<Animal>> createAnimals() {
+        var result = new HashMap<String,List<Animal>>();
+        for (int i = 0; i < 3; i++) {
+            int j = 0;
+            AnimalType animalType = getRandomAnimalType();
+            List<Animal> animals = new ArrayList<>();
+            do {
+                animals.add(createRandomAnimal(animalType));
+                j++;
+            }while (j<3);
+            result.put(animalType.getTypeName(),animals);
         }
-        return animals;
+        return result;
     }
-    public Animal[] createAnimalsImpl(){
+
+
+    public Map<String, List<Animal>> createAnimals(int number){
+        var result = new HashMap<String,List<Animal>>();
+        for (int i = 0; i < number; i++) {
+            AnimalType animalType = getRandomAnimalType();
+            List<Animal> animals;
+            if(result.containsKey(animalType.getTypeName())){
+                animals= result.get(animalType.getTypeName());
+            }
+            else {
+                animals = new ArrayList<>();
+                result.put(animalType.getTypeName(),animals);
+            }
+            animals.add(createRandomAnimal(animalType));
+
+        }
+        return result;
+    }
+    public Map<String, List<Animal>> createAnimalsImpl(){
         return CreateAnimalService.super.createAnimals();
     }
 }

@@ -33,4 +33,8 @@ public class Shark extends Predator {
     public String getCharacter() {
         return character;
     }
+    @Override
+    public String toString() {
+        return "Акула";
+    }
 }

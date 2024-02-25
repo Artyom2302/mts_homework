@@ -5,15 +5,29 @@ import ru.mtsbank.animals.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static java.lang.Math.round;
 
 public interface CreateAnimalService {
     public enum AnimalType{
-        CAT,
-        DOG,
-        WOLF,
-        SHARK
+
+        CAT("Кошка"),
+        DOG("Собака"),
+        WOLF("Волк"),
+        SHARK("Акула");
+
+        AnimalType(String animalTypeName) {
+            typeName = animalTypeName;
+        }
+        private String typeName;
+
+        public String getTypeName() {
+            return typeName;
+        }
     }
     default AnimalType getRandomAnimalType(){
         int choice = (int)(round(Math.random()*4) % 4);
@@ -56,14 +70,17 @@ public interface CreateAnimalService {
         return animal;
     }
     Animal getRandomAnimal();
-    default  Animal[] createAnimals(){
-        Animal[] animals = new Animal[10];
-        int i = 0;
-        while (i<10){
-            animals[i] = createRandomAnimal(getRandomAnimalType());
-            System.out.println("------");
-            i++;
+    default Map<String, List<Animal>> createAnimals(){
+        var result = new HashMap<String,List<Animal>>();
+        for (int j = 0; j < 3; j++) {
+            AnimalType animalType = getRandomAnimalType();
+            List<Animal> animals = new ArrayList<>();
+            for (int i = 0; i < 3; i++) {
+                animals.add(createRandomAnimal(animalType));
+            }
+            result.put(animalType.getTypeName(),animals);
         }
-        return animals;
+
+        return result;
     }
 }

@@ -1,25 +1,20 @@
 package ru.mtsbank.service;
 
 import org.springframework.beans.factory.annotation.Lookup;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import ru.mtsbank.animals.Animal;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Repository
 public class AnimalsRepositoryImpl implements AnimalsRepository {
 
 
-    Animal[] animals;
-    public Animal[] getAnimals() {
+    List<Animal> animals;
+    public List<Animal> getAnimals() {
         return animals;
     }
     @Lookup
@@ -28,51 +23,66 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     }
 
     AnimalsRepositoryImpl(){
-        animals = new Animal[10];
+        animals = new ArrayList<>(20);
     }
 
     @PostConstruct
     void createAnimals(){
-        for (int i = 0; i < animals.length ; i++) {
+        for (int i = 0; i < animals.size() ; i++) {
            CreateAnimalService createAnimalService = getCreateAnimalService();
-           animals[i] = createAnimalService.getRandomAnimal();
-            System.out.println(animals[i].getName());
+            animals.add(createAnimalService.getRandomAnimal());
+            System.out.println(animals.get(i).getName());
         }
     }
 
     @Override
-    public String[] findLeapYearNames() {
-        List<String> names = new ArrayList<>();
+    public Map<String, LocalDate> findLeapYearNames() {
+        Map<String, LocalDate> result = new HashMap<>();
         for (Animal animal:animals){
             if(animal.getBirthDate().isLeapYear()){
-                names.add(animal.getName());
+                result.put(animal.toString()+" "+animal.getName(),animal.getBirthDate());
             };
         }
-        String[] result = new String[names.size()];
-        names.toArray(result);
         return result;
     }
 
     @Override
-    public Animal[] findOlderAnimal(int age) {
-        List<Animal> animalList = new ArrayList<>();
+    public Map<Animal,Integer> findOlderAnimal(int age) {
+        Map<Animal,Integer> animalIntegerMap = new HashMap<>();
+        int maxlifeAge = 0;
+        Animal animalwithMaxAge = null;
         for (Animal animal:animals){
-            if(Period.between(animal.getBirthDate(), LocalDate.now()).getYears()>=age){
-                animalList.add(animal);
+            int lifeAge = Period.between(animal.getBirthDate(), LocalDate.now()).getYears();
+            if(lifeAge>=age){
+                animalIntegerMap.put(animal,lifeAge);
+                continue;
             };
+            if(lifeAge>=maxlifeAge){
+                animalwithMaxAge = animal;
+                maxlifeAge = lifeAge;
+            }
         }
-        Animal[] result = new Animal[animalList.size()];
-        animalList.toArray(result);
-        return result;
+        if (animalIntegerMap.size() == 0){
+            animalIntegerMap.put(animalwithMaxAge,maxlifeAge);
+        }
+
+        return animalIntegerMap;
     }
 
     @Override
-    public Set<Animal> findDuplicate() {
+    public Map<String,Integer> findDuplicate() {
         Set<Animal> set = new HashSet<>();
-        Set<Animal> dublicates = new HashSet<>();
-        for (int i = 0; i < animals.length; i++) {
-            if(!set.add(animals[i])){
-                dublicates.add(animals[i]);
+        Map<String,Integer>  dublicates = new HashMap<>();
+        for (int i = 0; i < animals.size(); i++) {
+            Animal animal = animals.get(i);
+            if(!set.add(animal)){
+               if(dublicates.containsKey(animal.toString())){
+                   Integer count = dublicates.get(animal.toString());
+                   dublicates.replace(animal.toString(),++count);
+               }
+               else {
+                   dublicates.put(animal.toString(),1);
+               }
             };
 
         }
@@ -81,9 +91,9 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
 
     @Override
     public void printDuplicate() {
-        Set<Animal> duplicates = findDuplicate();
-        for(Animal animal:duplicates){
-            System.out.println("Животное:"+animal.getName());
+        Map<String,Integer> duplicates = findDuplicate();
+        for(Map.Entry<String,Integer> keyValue:duplicates.entrySet()){
+            System.out.println(keyValue.getKey()+":"+keyValue.getValue());
         }
     }
 
