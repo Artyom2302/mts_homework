@@ -32,4 +32,8 @@ public class Wolf extends Predator {
     public String getCharacter() {
         return character;
     }
+    @Override
+    public String toString() {
+        return "Волк";
+    }
 }

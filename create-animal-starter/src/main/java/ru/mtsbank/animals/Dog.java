@@ -33,6 +33,9 @@ public class Dog extends Pet {
     public String getCharacter() {
         return character;
     }
-
+    @Override
+    public String toString() {
+        return "Собака";
+    }
 
 }
