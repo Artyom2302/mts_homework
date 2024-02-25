@@ -26,6 +26,7 @@ public class SpringStarterTest {
     @Test
     void postConstructTest(){
         Assertions.assertNotNull(repository.getAnimals());
+        Assertions.assertNotEquals(0,repository.getAnimals().size());
     }
     @Test
     void testConfigInit(){

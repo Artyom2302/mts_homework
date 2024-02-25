@@ -80,7 +80,6 @@ public interface CreateAnimalService {
             }
             result.put(animalType.getTypeName(),animals);
         }
-
         return result;
     }
 }

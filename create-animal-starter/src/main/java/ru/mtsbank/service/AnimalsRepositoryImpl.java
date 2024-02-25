@@ -22,13 +22,10 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         return null;
     }
 
-    AnimalsRepositoryImpl(){
-        animals = new ArrayList<>(20);
-    }
-
     @PostConstruct
     void createAnimals(){
-        for (int i = 0; i < animals.size() ; i++) {
+        animals = new ArrayList<>(20);
+        for (int i = 0; i < 20 ; i++) {
            CreateAnimalService createAnimalService = getCreateAnimalService();
             animals.add(createAnimalService.getRandomAnimal());
             System.out.println(animals.get(i).getName());
