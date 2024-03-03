@@ -41,10 +41,10 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
     public Animal getRandomAnimal(){
         Animal animal =CreateAnimalService.super.createRandomAnimal(type);
         if (animal instanceof Cat){
-            ((Cat) animal).setName(getRandomName(props.getCatNames()));
+            ((Cat) animal).setName(getRandomName(props.getCatNames()) + " #" +(int)(365*Math.random()));
         }
         if (animal instanceof Dog){
-            ((Dog) animal).setName(getRandomName(props.getDogNames()));
+            ((Dog) animal).setName(getRandomName(props.getDogNames())  + " #" +(int)(365*Math.random()));
         }
         return animal;
     }
