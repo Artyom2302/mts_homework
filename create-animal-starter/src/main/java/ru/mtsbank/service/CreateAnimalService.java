@@ -50,20 +50,21 @@ public interface CreateAnimalService {
     default Animal createRandomAnimal(AnimalType type){
         Animal animal = null;
         switch (type){
+            //Добавил Random #, чтобы не было Dublicate key exception при добавлении в map по имени
             case DOG:{
-                animal = new Dog("Хаски","Собака", BigDecimal.valueOf(3000),"Добрый",LocalDate.now().minusDays((long)(365*5*Math.random())));
+                animal = new Dog("Хаски","Собака #" + (int)(365*Math.random()), BigDecimal.valueOf(3000),"Добрый",LocalDate.now().minusDays((long)(365*5*Math.random())));
                 break;
             }
             case CAT:{
-                animal = new Cat("Британец","Кошка", BigDecimal.valueOf(2000),"Гордый",LocalDate.now().minusDays((long)(365*5*Math.random())));
+                animal = new Cat("Британец","Кошка #" + (int)(365*Math.random()), BigDecimal.valueOf(2000),"Гордый",LocalDate.now().minusDays((long)(365*5*Math.random())));
                 break;
             }
             case WOLF:{
-                animal = new Wolf("Северный","Волк","Злой",LocalDate.now().minusDays((long)(365*5*Math.random())));
+                animal = new Wolf("Северный","Волк #" + (int)(365*Math.random()),"Злой",LocalDate.now().minusDays((long)(365*5*Math.random())));
                 break;
             }
             case SHARK:{
-                animal = new Shark("Молот","Акула","Опасная",LocalDate.now().minusDays((long)(365*5*Math.random())));
+                animal = new Shark("Молот","Акула #" + (int)(365*Math.random()),"Опасная",LocalDate.now().minusDays((long)(365*5*Math.random())));
                 break;
             }
         }
