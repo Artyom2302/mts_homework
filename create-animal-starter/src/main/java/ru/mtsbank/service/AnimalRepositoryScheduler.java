@@ -3,6 +3,8 @@ package ru.mtsbank.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import ru.mtsbank.animals.Animal;
+import ru.mtsbank.exceptions.ArraySizeException;
+import ru.mtsbank.exceptions.MinAgeException;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -14,10 +16,14 @@ public class AnimalRepositoryScheduler {
 
     @Scheduled(fixedRate = 60000)
     void doTask(){
+        try {
         //Вызов методов
         //1)findLeapYearNames
         System.out.println("Поиск  животных високосного года");
-        var names = animalsRepository.findLeapYearNames();
+        Map<String, LocalDate> names = null;
+
+            names = animalsRepository.findLeapYearNames();
+
         for(Map.Entry<String, LocalDate> keyValue:names.entrySet()){
             System.out.println(keyValue.getKey()+" : "+keyValue.getValue());
         }
@@ -36,5 +42,15 @@ public class AnimalRepositoryScheduler {
         System.out.println("Вывод дубликатов");
         animalsRepository.printDuplicate();
         System.out.println();
-    }
+        }
+        catch (ArraySizeException e) {
+            System.out.println("Ошибка с размером массива");
+            System.out.println(e.getMessage());
+
+        }
+        catch (MinAgeException e){
+            System.out.println("Ошибка возрастом");
+            System.out.println(e.getMessage());
+        }
+}
 }

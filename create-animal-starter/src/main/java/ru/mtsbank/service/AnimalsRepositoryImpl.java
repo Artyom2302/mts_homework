@@ -3,6 +3,8 @@ package ru.mtsbank.service;
 import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Repository;
 import ru.mtsbank.animals.Animal;
+import ru.mtsbank.exceptions.ArraySizeException;
+import ru.mtsbank.exceptions.MinAgeException;
 
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
@@ -36,14 +38,23 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     }
 
     @Override
-    public Map<String, LocalDate> findLeapYearNames() {
+    public Map<String, LocalDate> findLeapYearNames() throws ArraySizeException {
+        if (animals.size()==0){
+            throw new ArraySizeException(animals.size());
+        }
         return animals.stream()
                 .filter(animal1 -> animal1.getBirthDate().isLeapYear())
                 .collect(Collectors.toMap(animal -> animal.toString()+" "+animal.getName(),Animal::getBirthDate));
     }
 
     @Override
-    public Map<Animal,Integer> findOlderAnimal(int age) {
+    public Map<Animal,Integer> findOlderAnimal(int age) throws MinAgeException,ArraySizeException {
+        if (age<=0){
+            throw new MinAgeException(age);
+        }
+        if (animals.size()==0){
+            throw new ArraySizeException(0);
+        }
         Map<Animal, Integer> findedanimals = animals.stream()
                 .filter(animal -> (Period.between(animal.getBirthDate(), LocalDate.now()).getYears()) > age)
                 .collect(Collectors.toMap(animal->animal,animal -> Period.between(animal.getBirthDate(), LocalDate.now()).getYears()));
@@ -58,8 +69,10 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     }
 
     @Override
-    public Map<String,Integer> findDuplicate() {
-
+    public Map<String,Integer> findDuplicate() throws ArraySizeException {
+        if (animals.size()<=1){
+            throw new ArraySizeException(animals.size());
+        }
         //Уменьшение на -1 нужно, чтобы не считать сам объект, к которому ищутся дубликаты
         Map<String, Integer> result = animals.stream().collect(Collectors.groupingBy(Function.identity()))
                 .entrySet()
@@ -70,7 +83,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     }
 
     @Override
-    public void printDuplicate() {
+    public void printDuplicate() throws ArraySizeException {
         Map<String,Integer> duplicates = findDuplicate();
         for(Map.Entry<String,Integer> keyValue:duplicates.entrySet()){
             System.out.println(keyValue.getKey()+":"+keyValue.getValue());
@@ -78,7 +91,10 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     }
 
     @Override
-    public double findAverageAge() {
+    public double findAverageAge() throws ArraySizeException {
+        if (animals.size()==0){
+            throw new ArraySizeException(animals.size());
+        }
         return animals.stream()
                 .mapToInt(animal->Period.between(animal.getBirthDate(),LocalDate.now()).getYears())
                 .average()
@@ -86,7 +102,10 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     }
 
     @Override
-    public List<Animal> findOldAndExpensive() {
+    public List<Animal> findOldAndExpensive() throws ArraySizeException {
+        if (animals.size()==0){
+            throw new ArraySizeException(animals.size());
+        }
         var result = animals.stream()
                 .filter(animal -> Period.between(animal.getBirthDate(),LocalDate.now()).getYears()>5)
                 .filter(animal -> animal.getCost().compareTo(
@@ -100,7 +119,10 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     }
 
     @Override
-    public List<String> findMinConstAnimals() {
+    public List<String> findMinConstAnimals() throws ArraySizeException {
+        if (animals.size()==0){
+            throw new ArraySizeException(animals.size());
+        }
         return animals.stream()
                 .filter(animal -> animal.getCost().compareTo(BigDecimal.valueOf(0))>0)
                 .sorted(Comparator.comparing(Animal::getCost))
