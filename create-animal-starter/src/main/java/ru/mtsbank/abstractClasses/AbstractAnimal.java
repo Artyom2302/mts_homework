@@ -33,10 +33,6 @@ public abstract class AbstractAnimal implements Animal {
         AbstractAnimal animal = (AbstractAnimal)obj;
         if (!getBread().equals(animal.getBread()))
             return false;
-        if (!getCharacter().equals(animal.getCharacter()))
-            return false;
-        if (!getBirthDate().equals(animal.getBirthDate()))
-            return false;
         return true;
     }
 
