@@ -1,5 +1,6 @@
 package ru.mtsbank.animals;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import ru.mtsbank.abstractClasses.Pet;
 
 

@@ -1,22 +1,40 @@
 package ru.mtsbank.service;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Lookup;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Repository;
 import ru.mtsbank.animals.Animal;
 import ru.mtsbank.exceptions.ArraySizeException;
 import ru.mtsbank.exceptions.MinAgeException;
+import ru.mtsbank.util.AnimalObjectMapper;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.math.BigDecimal;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Repository
 public class AnimalsRepositoryImpl implements AnimalsRepository {
-
 
     List<Animal> animals;
     public List<Animal> getAnimals() {
@@ -34,9 +52,14 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
            CreateAnimalService createAnimalService = getCreateAnimalService();
             animals.add(createAnimalService.getRandomAnimal());
             System.out.println(animals.get(i).getName());
+            try {
+                System.out.println(AnimalObjectMapper.objectMapper.writeValueAsString(animals.get(i)));
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
         }
-    }
 
+    }
     @Override
     public Map<String, LocalDate> findLeapYearNames() throws ArraySizeException {
         if (animals.size()==0){
@@ -46,6 +69,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
                 .filter(animal1 -> animal1.getBirthDate().isLeapYear())
                 .collect(Collectors.toMap(animal -> animal.toString()+" "+animal.getName(),Animal::getBirthDate));
     }
+
 
     @Override
     public Map<Animal,Integer> findOlderAnimal(int age) throws MinAgeException,ArraySizeException {
@@ -68,6 +92,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         return findedanimals;
     }
 
+
     @Override
     public Map<String,Integer> findDuplicate() throws ArraySizeException {
         if (animals.size()<=1){
@@ -81,6 +106,8 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
                 .collect(Collectors.toMap(animalListEntry -> animalListEntry.getKey().toString(),animalListEntry->animalListEntry.getValue().size()-1));
         return result;
     }
+
+
 
     @Override
     public void printDuplicate() throws ArraySizeException {
@@ -101,13 +128,14 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
                 .orElse(0.0);
     }
 
+
     @Override
     public List<Animal> findOldAndExpensive() throws ArraySizeException {
         if (animals.size()==0){
             throw new ArraySizeException(animals.size());
         }
         var result = animals.stream()
-                .filter(animal -> Period.between(animal.getBirthDate(),LocalDate.now()).getYears()>5)
+                .filter(animal -> Period.between(animal.getBirthDate(),LocalDate.now()).getYears()>2)
                 .filter(animal -> animal.getCost().compareTo(
                         BigDecimal.valueOf(animals.stream()
                         .map(Animal::getCost)
@@ -118,16 +146,19 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         return result;
     }
 
+
     @Override
     public List<String> findMinConstAnimals() throws ArraySizeException {
         if (animals.size()==0){
             throw new ArraySizeException(animals.size());
         }
+
         return animals.stream()
-                .filter(animal -> animal.getCost().compareTo(BigDecimal.valueOf(0))>0)
+                .filter(animal ->animal.getCost() != null && animal.getCost().compareTo(BigDecimal.ZERO) > 0)
                 .sorted(Comparator.comparing(Animal::getCost))
                 .limit(3)
-                .sorted(Comparator.comparing(Animal::getName).reversed()).map(Animal::getName).collect(Collectors.toList());
+                .sorted(Comparator.comparing(Animal::getName).reversed())
+                .map(Animal::getName)
+                .collect(Collectors.toList());
     }
-
 }
