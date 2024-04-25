@@ -136,6 +136,8 @@ public class AnimalRepositoryScheduler {
                 System.out.println(creature);
             }
         } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Ошибка БД");
             throw new RuntimeException(e);
         }
     }
