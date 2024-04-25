@@ -5,19 +5,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.mtsbank.animals.Animal;
+import ru.mtsbank.dao.Creature;
+import ru.mtsbank.dao.CreatureDAO;
 import ru.mtsbank.exceptions.ArraySizeException;
 import ru.mtsbank.exceptions.MinAgeException;
 
 import javax.annotation.PostConstruct;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 
-@Component
 public class AnimalRepositoryScheduler {
     @Autowired
     FileWorkService fileWorkService;
+    @Autowired
+    CreatureDAO creatureDAO;
 
     @PostConstruct
     void threadStart(){
@@ -58,72 +62,81 @@ public class AnimalRepositoryScheduler {
 
     @Scheduled(fixedRate = 60000)
     void doTask(){
+//        try {
+//        //Вызов методов
+//        //1)findLeapYearNames
+//        System.out.println("Поиск  животных високосного года");
+//        fileWorkService.writeFindLeapYearFile();
+//        Map<String, LocalDate> names = null;
+//        names = fileWorkService.readFindLeapYearFile();
+//        for(Map.Entry<String, LocalDate> keyValue:names.entrySet()){
+//            System.out.println(keyValue.getKey()+" : "+keyValue.getValue());
+//        }
+//        System.out.println("-----------------------");
+//
+//
+//
+//
+//        //2)findOlderAnimal
+//        System.out.println("Поиск старших животных");
+//        fileWorkService.writeOlderAnimal(5);
+//        Map<Animal, Integer> animals = fileWorkService.readOlderAnimal();
+//        for(Map.Entry<Animal, Integer> animal: animals.entrySet()){
+//            System.out.println("Животное:"+animal.getKey().getName()+"/Возраст: "+animal.getValue()+"|");
+//        }
+//        System.out.println("-----------------------");
+//
+//        //3)findDuplicate
+//        System.out.println("Поиск дубликатов");
+//        fileWorkService.writeFindDuplicate();
+//        Map<String,Integer> duplicates = fileWorkService.readFindDuplicate();
+//        for(Map.Entry<String,Integer> keyValue:duplicates.entrySet()){
+//                System.out.println(keyValue.getKey()+":"+keyValue.getValue());
+//        }
+//        System.out.println("-----------------------");
+//        //4)findMinCost
+//            System.out.println("Поиск с минимальной ценой");
+//        fileWorkService.writeFindMinCost();
+//        List<String> minCost = fileWorkService.readFindMinCost();
+//        for (String str: minCost){
+//            System.out.print(str+", ");
+//        }
+//            System.out.println();
+//            System.out.println("-----------------------");
+//        //5)findAvgAge
+//            System.out.println("Поиск среднего возраста");
+//            fileWorkService.writeAvgAge();
+//            System.out.println("Средний возраст равен "+ fileWorkService.readAveAge());
+//            System.out.println("-----------------------");
+//
+//        //6)findOldAndExpensive
+//            System.out.println("Поиск старого и дорогово животного");
+//            fileWorkService.writeFindOldAndExpensive();
+//            List<Animal> animalList = fileWorkService.readFindOldAndExpensive();
+//            for(Animal animal:animalList){
+//                System.out.println("Животное " +animal.getName()+ " говорит "+animal.getSecretInformation());
+//            }
+//            System.out.println("-----------------------");
+//        }
+//        catch (ArraySizeException e) {
+//            System.out.println("Ошибка с размером массива");
+//            System.out.println(e.getMessage());
+//
+//        }
+//        catch (MinAgeException e){
+//            System.out.println("Ошибка возрастом");
+//            System.out.println(e.getMessage());
+//        } catch (JsonProcessingException e) {
+//            System.out.println("Ошибка в обработке Json");
+//        }
+
         try {
-        //Вызов методов
-        //1)findLeapYearNames
-        System.out.println("Поиск  животных високосного года");
-        fileWorkService.writeFindLeapYearFile();
-        Map<String, LocalDate> names = null;
-        names = fileWorkService.readFindLeapYearFile();
-        for(Map.Entry<String, LocalDate> keyValue:names.entrySet()){
-            System.out.println(keyValue.getKey()+" : "+keyValue.getValue());
-        }
-        System.out.println("-----------------------");
-
-
-
-
-        //2)findOlderAnimal
-        System.out.println("Поиск старших животных");
-        fileWorkService.writeOlderAnimal(5);
-        Map<Animal, Integer> animals = fileWorkService.readOlderAnimal();
-        for(Map.Entry<Animal, Integer> animal: animals.entrySet()){
-            System.out.println("Животное:"+animal.getKey().getName()+"/Возраст: "+animal.getValue()+"|");
-        }
-        System.out.println("-----------------------");
-
-        //3)findDuplicate
-        System.out.println("Поиск дубликатов");
-        fileWorkService.writeFindDuplicate();
-        Map<String,Integer> duplicates = fileWorkService.readFindDuplicate();
-        for(Map.Entry<String,Integer> keyValue:duplicates.entrySet()){
-                System.out.println(keyValue.getKey()+":"+keyValue.getValue());
-        }
-        System.out.println("-----------------------");
-        //4)findMinCost
-            System.out.println("Поиск с минимальной ценой");
-        fileWorkService.writeFindMinCost();
-        List<String> minCost = fileWorkService.readFindMinCost();
-        for (String str: minCost){
-            System.out.print(str+", ");
-        }
-            System.out.println();
-            System.out.println("-----------------------");
-        //5)findAvgAge
-            System.out.println("Поиск среднего возраста");
-            fileWorkService.writeAvgAge();
-            System.out.println("Средний возраст равен "+ fileWorkService.readAveAge());
-            System.out.println("-----------------------");
-
-        //6)findOldAndExpensive
-            System.out.println("Поиск старого и дорогово животного");
-            fileWorkService.writeFindOldAndExpensive();
-            List<Animal> animalList = fileWorkService.readFindOldAndExpensive();
-            for(Animal animal:animalList){
-                System.out.println("Животное " +animal.getName()+ " говорит "+animal.getSecretInformation());
+            List<Creature> result = creatureDAO.getCreature();
+            for(Creature creature: result){
+                System.out.println(creature);
             }
-            System.out.println("-----------------------");
-        }
-        catch (ArraySizeException e) {
-            System.out.println("Ошибка с размером массива");
-            System.out.println(e.getMessage());
-
-        }
-        catch (MinAgeException e){
-            System.out.println("Ошибка возрастом");
-            System.out.println(e.getMessage());
-        } catch (JsonProcessingException e) {
-            System.out.println("Ошибка в обработке Json");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

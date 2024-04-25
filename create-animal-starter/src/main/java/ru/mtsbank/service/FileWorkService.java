@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.mtsbank.animals.Animal;
 import ru.mtsbank.exceptions.ArraySizeException;
@@ -34,6 +33,9 @@ public class FileWorkService {
     static private  String Path = "resources/result/";
     @Autowired
     AnimalsRepository animalsRepository;
+
+    @Autowired
+    AnimalObjectMapper animalObjectMapper;
 
     @PostConstruct
     void createDirectories(){
@@ -88,7 +90,7 @@ public class FileWorkService {
         Path filePath = Paths.get(Path + "FindMinConst.json");
 
         try(FileOutputStream stream = new FileOutputStream(filePath.toFile())) {
-            AnimalObjectMapper.objectMapper.writeValue(stream,result);
+            animalObjectMapper.objectMapper.writeValue(stream,result);
         } catch (IOException e) {
             System.out.println("Не записалось в файл");
             throw new RuntimeException(e);
@@ -97,7 +99,7 @@ public class FileWorkService {
     List<String> readFindMinCost() throws JsonProcessingException {
         Path filePath = Paths.get(Path + "FindMinConst.json");
         try(FileInputStream stream = new FileInputStream(filePath.toFile())) {
-            List<String> result=AnimalObjectMapper.objectMapper.readValue(stream, new TypeReference<>() {});
+            List<String> result= animalObjectMapper.objectMapper.readValue(stream, new TypeReference<>() {});
             return result;
         } catch (IOException e) {
             System.out.println("Не считалось с файла");
@@ -109,7 +111,7 @@ public class FileWorkService {
         List<Animal> result = animalsRepository.findOldAndExpensive();
         Path filePath = Paths.get(Path + "findOldAndExpensive.json");
         try(FileOutputStream stream = new FileOutputStream(filePath.toFile())) {
-            AnimalObjectMapper.objectMapper.writeValue(stream,result);
+            animalObjectMapper.objectMapper.writeValue(stream,result);
         } catch (IOException e) {
             System.out.println("Не записалось в файл");
             throw new RuntimeException(e);
@@ -118,7 +120,7 @@ public class FileWorkService {
     List<Animal> readFindOldAndExpensive(){
         Path filePath = Paths.get(Path + "findOldAndExpensive.json");
         try(FileInputStream stream = new FileInputStream(filePath.toFile())) {
-            List<Animal> result=AnimalObjectMapper.objectMapper.readValue(stream, new TypeReference<>() {});
+            List<Animal> result= animalObjectMapper.objectMapper.readValue(stream, new TypeReference<>() {});
             return result;
         } catch (IOException e) {
             System.out.println("Не считалось с файла");
@@ -129,7 +131,7 @@ public class FileWorkService {
         double result = animalsRepository.findAverageAge();
         Path filePath = Paths.get(Path + "findAverageAge.json");
         try(FileOutputStream stream = new FileOutputStream(filePath.toFile())) {
-            AnimalObjectMapper.objectMapper.writeValue(stream,result);
+            animalObjectMapper.objectMapper.writeValue(stream,result);
         } catch (IOException e) {
             System.out.println("Не записалось в файл");
             throw new RuntimeException(e);
@@ -138,7 +140,7 @@ public class FileWorkService {
     double readAveAge(){
         Path filePath = Paths.get(Path + "findAverageAge.json");
         try(FileInputStream stream = new FileInputStream(filePath.toFile())) {
-            return AnimalObjectMapper.objectMapper.readValue(stream, Double.class);
+            return animalObjectMapper.objectMapper.readValue(stream, Double.class);
         } catch (IOException e) {
             System.out.println("Не считалось с файла");
             throw new RuntimeException(e);
@@ -148,7 +150,7 @@ public class FileWorkService {
         Map<String, Integer> result = animalsRepository.findDuplicate();
         Path filePath = Paths.get(Path+"findDuplicate.json");
         try(FileOutputStream stream = new FileOutputStream(filePath.toFile())) {
-            AnimalObjectMapper.objectMapper.writeValue(stream,result);
+            animalObjectMapper.objectMapper.writeValue(stream,result);
         } catch (IOException e) {
             System.out.println("Не записалось в файл");
             throw new RuntimeException(e);
@@ -158,7 +160,7 @@ public class FileWorkService {
     Map<String,Integer> readFindDuplicate(){
         Path filePath = Paths.get(Path+"findDuplicate.json");
         try(FileInputStream stream = new FileInputStream(filePath.toFile())) {
-            return AnimalObjectMapper.objectMapper.readValue(stream, new TypeReference<>() {});
+            return animalObjectMapper.objectMapper.readValue(stream, new TypeReference<>() {});
         } catch (IOException e) {
             System.out.println("Не считалось с файла");
             throw new RuntimeException(e);
@@ -168,7 +170,7 @@ public class FileWorkService {
         Map<String, LocalDate> result = animalsRepository.findLeapYearNames();
         Path filePath = Paths.get(Path + "findLeapYear.json");
         try(FileOutputStream stream = new FileOutputStream(filePath.toFile())) {
-            AnimalObjectMapper.objectMapper.writeValue(stream,result);
+            animalObjectMapper.objectMapper.writeValue(stream,result);
         } catch (IOException e) {
             System.out.println("Не записалось в файл");
             throw new RuntimeException(e);
@@ -177,7 +179,7 @@ public class FileWorkService {
     Map<String, LocalDate> readFindLeapYearFile(){
         Path filePath = Paths.get(Path + "findLeapYear.json");
         try(FileInputStream stream = new FileInputStream(filePath.toFile())) {
-            return AnimalObjectMapper.objectMapper.readValue(stream, new TypeReference<>() {});
+            return animalObjectMapper.objectMapper.readValue(stream, new TypeReference<>() {});
         } catch (IOException e) {
             System.out.println("Не считалось с файла");
             throw new RuntimeException(e);
@@ -190,14 +192,14 @@ public class FileWorkService {
         for (Map.Entry<Animal, Integer> entry : result.entrySet()) {
             Animal animal = entry.getKey();
             Integer animalAge = entry.getValue();
-            ObjectNode objectNode = AnimalObjectMapper.objectMapper.createObjectNode();
-            JsonNode jNode = AnimalObjectMapper.objectMapper.convertValue(animal, ObjectNode.class);
+            ObjectNode objectNode = animalObjectMapper.objectMapper.createObjectNode();
+            JsonNode jNode = animalObjectMapper.objectMapper.convertValue(animal, ObjectNode.class);
             objectNode.set("animal", jNode);
             objectNode.put("age", animalAge);
             jsonArray.add(objectNode);
         }
         try(FileOutputStream stream = new FileOutputStream(filePath.toFile())) {
-            AnimalObjectMapper.objectMapper.writeValue(stream,jsonArray);
+            animalObjectMapper.objectMapper.writeValue(stream,jsonArray);
         } catch (IOException e) {
             System.out.println("Не считалось с файла");
             throw new RuntimeException(e);
@@ -207,10 +209,10 @@ public class FileWorkService {
         Path filePath = Paths.get(Path + "findOlderAnimal.json");
         try(FileInputStream stream = new FileInputStream(filePath.toFile())) {
             Map<Animal,Integer> result = new HashMap<>();
-            JsonNode nodes = AnimalObjectMapper.objectMapper.readTree(stream);
+            JsonNode nodes = animalObjectMapper.objectMapper.readTree(stream);
             for(JsonNode node:nodes){
-                Animal animal = AnimalObjectMapper.objectMapper.convertValue(node.get("animal"),Animal.class);
-                Integer age = AnimalObjectMapper.objectMapper.convertValue(node.get("age"),Integer.class);
+                Animal animal = animalObjectMapper.objectMapper.convertValue(node.get("animal"),Animal.class);
+                Integer age = animalObjectMapper.objectMapper.convertValue(node.get("age"),Integer.class);
                 result.put(animal,age);
             }
             return result;

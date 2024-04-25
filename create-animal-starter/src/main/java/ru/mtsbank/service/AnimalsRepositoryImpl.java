@@ -1,14 +1,8 @@
 package ru.mtsbank.service;
 
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Lookup;
-import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Repository;
 import ru.mtsbank.animals.Animal;
 import ru.mtsbank.exceptions.ArraySizeException;
@@ -16,19 +10,9 @@ import ru.mtsbank.exceptions.MinAgeException;
 import ru.mtsbank.util.AnimalObjectMapper;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.math.BigDecimal;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -40,6 +24,8 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     public List<Animal> getAnimals() {
         return animals;
     }
+    @Autowired
+    AnimalObjectMapper animalObjectMapper;
     @Lookup
     public CreateAnimalService getCreateAnimalService() {
         return null;
@@ -53,7 +39,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
             animals.add(createAnimalService.getRandomAnimal());
             System.out.println(animals.get(i).getName());
             try {
-                System.out.println(AnimalObjectMapper.objectMapper.writeValueAsString(animals.get(i)));
+                System.out.println(animalObjectMapper.objectMapper.writeValueAsString(animals.get(i)));
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
