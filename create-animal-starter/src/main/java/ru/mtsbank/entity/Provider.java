@@ -1,4 +1,4 @@
-package ru.mtsbank.dao;
+package ru.mtsbank.entity;
 
 public class Provider {
     int providerId;

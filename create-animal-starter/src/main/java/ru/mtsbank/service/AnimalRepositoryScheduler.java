@@ -1,20 +1,14 @@
 package ru.mtsbank.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
-import ru.mtsbank.animals.Animal;
-import ru.mtsbank.dao.Creature;
+import ru.mtsbank.entity.Creature;
 import ru.mtsbank.dao.CreatureDAO;
 import ru.mtsbank.exceptions.ArraySizeException;
-import ru.mtsbank.exceptions.MinAgeException;
 
 import javax.annotation.PostConstruct;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 
 public class AnimalRepositoryScheduler {

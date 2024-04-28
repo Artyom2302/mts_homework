@@ -2,9 +2,9 @@ package ru.mtsbank.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.mtsbank.entity.Creature;
 import ru.mtsbank.service.JDBCService;
 
-import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

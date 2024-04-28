@@ -1,4 +1,4 @@
-package ru.mtsbank.dao;
+package ru.mtsbank.entity;
 
 import java.sql.Date;
 import java.time.LocalDate;

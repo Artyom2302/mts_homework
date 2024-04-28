@@ -1,4 +1,6 @@
-package ru.mtsbank.dao;
+package ru.mtsbank.entity;
+
+
 
 public class AnimalType {
     int idType;
