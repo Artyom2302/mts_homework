@@ -11,10 +11,10 @@ public class Breed {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "breed_id")
-    int id;
+    private int id;
 
     @Column(name = "name")
-    String name;
+    private String name;
     @OneToMany(mappedBy = "breed")
-    List<Creature> creatureList;
+    private List<Creature> creatureList;
 }

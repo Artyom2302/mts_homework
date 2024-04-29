@@ -15,20 +15,20 @@ public class Creature implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    int id;
+    private int id;
 
     @Column(name = "name")
-    String name;
+    private String name;
 
     @Column(name = "type_id")
-    int typeId;
+    private int typeId;
 
     @Column(name = "age")
-    int age;
+    private int age;
 
     @ManyToOne()
     @JoinColumn(name="id_breed")
-    Breed breed;
+    private Breed breed;
 
     @Column(name = "birth_date")
     private LocalDate birthDate;
