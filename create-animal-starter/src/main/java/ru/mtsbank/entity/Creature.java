@@ -1,37 +1,36 @@
 package ru.mtsbank.entity;
 
+import lombok.Data;
+
+import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
 
 
-public class Creature {
-    private int id;
-    private String name;
-    private int typeId;
-    private int age;
+@Entity
+@Table(name = "creature")
+@Data
+public class Creature implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    int id;
 
+    @Column(name = "name")
+    String name;
 
+    @Column(name = "type_id")
+    int typeId;
 
+    @Column(name = "age")
+    int age;
+
+    @ManyToOne()
+    @JoinColumn(name="id_breed")
+    Breed breed;
+
+    @Column(name = "birth_date")
     private LocalDate birthDate;
-
-    public Creature() {
-    }
-    public Creature(int id, String name, int typeId, int age, Date birthDate) {
-        this.id = id;
-        this.name = name;
-        this.typeId = typeId;
-        this.age = age;
-        this.birthDate = birthDate.toLocalDate();
-    }
-    @Override
-    public String toString() {
-        return "Creature{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", typeId=" + typeId +
-                ", age=" + age +
-                ", birthDate=" + birthDate +
-                '}';
-    }
 
 }

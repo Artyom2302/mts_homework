@@ -1,5 +1,8 @@
 package ru.mtsbank.dao;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.mtsbank.entity.Creature;
@@ -13,21 +16,21 @@ import java.util.List;
 @Component
 public class CreatureDAO {
     @Autowired
-    JDBCService jdbcService;
+    SessionFactory sessionFactory;
 
-
-    public List<Creature> getCreature() throws SQLException {
-        ResultSet resultSet = jdbcService.selectFromCreature();
-        List<Creature> result = new ArrayList<>();
-        while (resultSet.next()){
-            result.add(new Creature(
-               resultSet.getInt("id_creature"),
-               resultSet.getString("Name"),
-               resultSet.getInt("type_id"),
-               resultSet.getInt("age"),
-               resultSet.getDate("birth_date")
-            ));
+    public void add(Creature creature){
+        try (Session session = sessionFactory.getCurrentSession()){
+            session.merge(creature);
         }
+    }
+
+    public List<Creature> findAll(){
+
+        List<Creature> result;
+        Session currentSession =   sessionFactory.getCurrentSession();
+        Transaction tr = currentSession.beginTransaction();
+        result = currentSession.createQuery("from " + Creature.class.getName(),Creature.class).list();
+        tr.commit();
         return result;
     }
 }
