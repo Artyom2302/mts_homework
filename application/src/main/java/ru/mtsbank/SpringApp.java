@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import ru.mtsbank.service.AnimalsRepository;
 
 
-@ComponentScan("ru.mtsbank")
+
 @SpringBootApplication
 @EnableScheduling
 public class SpringApp {

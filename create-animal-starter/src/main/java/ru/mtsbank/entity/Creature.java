@@ -1,8 +1,9 @@
 package ru.mtsbank.entity;
 
+import jakarta.persistence.*;
 import lombok.Data;
 
-import javax.persistence.*;
+
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -14,7 +15,7 @@ import java.time.LocalDate;
 public class Creature implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id_creature")
     private int id;
 
     @Column(name = "name")

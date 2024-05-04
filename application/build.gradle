@@ -1,7 +1,8 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.7.4'
+    id 'org.springframework.boot' version '3.1.4'
     id 'io.spring.dependency-management' version '1.1.4'
+
 }
 
 group 'ru.mts'
@@ -11,18 +12,33 @@ repositories {
     mavenCentral()
 }
 java {
-    sourceCompatibility = '11'
+    sourceCompatibility = '17'
 }
 dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter'
+// https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa
+    implementation 'org.springframework.data:spring-data-jpa:3.2.5'
     implementation project(':create-animal-starter')
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.4'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.2'
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.2'
+
+    implementation 'org.glassfish.jaxb:jaxb-runtime:4.0.4'
+    // JAXB API
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
+    // JAXB Core
+    implementation 'com.sun.xml.bind:jaxb-core:2.3.0.1'
+
+    // JAXB Implementation
+    implementation 'com.sun.xml.bind:jaxb-impl:2.3.3'
+
+    // Activation (required for JAXB)
+    implementation 'javax.activation:activation:1.1.1'
 }
 
 test {

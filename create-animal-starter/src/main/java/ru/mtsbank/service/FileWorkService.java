@@ -10,7 +10,7 @@ import ru.mtsbank.animals.Animal;
 import ru.mtsbank.exceptions.ArraySizeException;
 import ru.mtsbank.util.AnimalObjectMapper;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
