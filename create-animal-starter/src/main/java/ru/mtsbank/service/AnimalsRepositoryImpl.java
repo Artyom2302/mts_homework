@@ -2,6 +2,7 @@ package ru.mtsbank.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.annotation.PostConstruct;
+import lombok.Data;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Lookup;
@@ -21,8 +22,15 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Repository
-@Getter
 public class AnimalsRepositoryImpl implements AnimalsRepository {
+
+    public List<Animal> getAnimals() {
+        return animals;
+    }
+
+    public void setAnimals(List<Animal> animals) {
+        this.animals = animals;
+    }
 
     List<Animal> animals;
 
