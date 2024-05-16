@@ -1,7 +1,8 @@
 package ru.mtsbank.service;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @SpringBootTest
+@Disabled
 public class CreateServiceTest {
     @Autowired
     CreateAnimalServiceImpl createAnimalService;

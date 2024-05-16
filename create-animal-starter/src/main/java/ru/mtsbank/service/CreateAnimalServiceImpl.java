@@ -19,8 +19,6 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
 
     private CreateServiceProperties props;
 
-
-
     CreateAnimalService.AnimalType type;
 
     public CreateAnimalServiceImpl(CreateServiceProperties props) {
@@ -48,6 +46,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
         if (animal instanceof Dog){
             ((Dog) animal).setName(getRandomName(props.getDogNames())  + " #" +(int)(365*Math.random()));
         }
+        animal.setSecretInformation(FileWorkService.getStringFromSecretInfo());
         return animal;
     }
 

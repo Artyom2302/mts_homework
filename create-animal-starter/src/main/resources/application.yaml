@@ -3,3 +3,16 @@ properties:
     names:
      catNames: persik,barsik,pushok,
      dogNames: sharik,persik,sobaka
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/postgres?currentSchema=animals"
+    username: "postgres"
+    password: "1234"
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  flyway:
+    user: "postgres"
+    password: "1234"
+    default-schema: "animals"
