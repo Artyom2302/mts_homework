@@ -4,7 +4,7 @@ package ru.mtsbank.entity;
 import lombok.Data;
 import lombok.extern.apachecommons.CommonsLog;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -16,7 +16,7 @@ public class AnimalType implements Serializable {
     @Column(name = "type_id")
     private int idType;
 
-    @Column(name = "type_name")
+    @Column(name = "type")
     private String typeName;
 
     @Column(name = "is_wild")

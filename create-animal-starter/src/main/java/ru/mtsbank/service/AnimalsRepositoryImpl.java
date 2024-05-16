@@ -1,20 +1,19 @@
 package ru.mtsbank.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.annotation.PostConstruct;
+import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 import ru.mtsbank.animals.Animal;
-import ru.mtsbank.dao.CreatureDAO;
 import ru.mtsbank.entity.Creature;
 import ru.mtsbank.exceptions.ArraySizeException;
 import ru.mtsbank.exceptions.MinAgeException;
 import ru.mtsbank.util.AnimalObjectMapper;
 
-import javax.annotation.PostConstruct;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
@@ -23,18 +22,23 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Repository
-@Getter
 public class AnimalsRepositoryImpl implements AnimalsRepository {
+
+    public List<Animal> getAnimals() {
+        return animals;
+    }
+
+    public void setAnimals(List<Animal> animals) {
+        this.animals = animals;
+    }
 
     List<Animal> animals;
 
     List<Creature> creatures;
 
+
     @Autowired
-    CreatureDAO creatureDAO;
-
-
-
+    CreatureService creatureService;
     @Autowired
     AnimalObjectMapper animalObjectMapper;
 
@@ -56,7 +60,9 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
                 throw new RuntimeException(e);
             }
         }
-        creatures = creatureDAO.findAll();
+
+
+        creatures = creatureService.findAll();
 
 
     }

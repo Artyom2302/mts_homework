@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="4">
+    <thead>
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+        <td>Age</td>
+        <td>TypeId</td>
+        <td>Breed</td>
+        <td>BirthDate</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each ="creature : ${creaturesList}">
+        <td th:text="${creature.getId()}"></td>
+        <td th:text="${creature.getName()}"></td>
+        <td th:text="${creature.getAge()}"></td>
+        <td th:text="${creature.getTypeId()}"></td>
+        <td th:text="${creature.getBreed()}"></td>
+        <td th:text="${creature.getBirthDate()}"></td>
+        <td>
+            <form  th:action="@{/creatures/{id}(id = ${creature.getId()})}" th:method="delete">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<form  th:action="@{/creatures/new}" th:method="GET">
+    <button type="submit">Create new creature</button>
+</form>
+
+</body>
+</html>

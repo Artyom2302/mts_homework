@@ -1,23 +1,21 @@
 package ru.mtsbank.service;
 
-import org.hibernate.SessionFactory;
+
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import ru.mtsbank.entity.Creature;
-import ru.mtsbank.dao.CreatureDAO;
 import ru.mtsbank.exceptions.ArraySizeException;
 
-import javax.annotation.PostConstruct;
-import java.sql.SQLException;
+
 import java.util.List;
-import java.util.Scanner;
 
 
 public class AnimalRepositoryScheduler {
     @Autowired
     FileWorkService fileWorkService;
     @Autowired
-    CreatureDAO creatureDAO;
+    CreatureService creatureService;
 
 
     @PostConstruct
@@ -57,7 +55,7 @@ public class AnimalRepositoryScheduler {
         threadFindAverageAge.start();
     }
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 10000)
     void doTask(){
 //        try {
 //        //Вызов методов
@@ -126,7 +124,8 @@ public class AnimalRepositoryScheduler {
 //        } catch (JsonProcessingException e) {
 //            System.out.println("Ошибка в обработке Json");
 //        }
-            List<Creature> result = creatureDAO.findAll();
+            System.out.println("Поиск животных");
+            List<Creature> result = creatureService.findAll();
             for(Creature creature: result){
                 System.out.println(creature);
             }
