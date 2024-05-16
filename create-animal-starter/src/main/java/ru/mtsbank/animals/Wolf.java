@@ -1,9 +1,11 @@
 package ru.mtsbank.animals;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import ru.mtsbank.abstractClasses.Predator;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
 
 public class Wolf extends Predator {
     public Wolf(String breed, String name, String character, LocalDate birthDate){
@@ -25,11 +27,15 @@ public class Wolf extends Predator {
 
     @Override
     public BigDecimal getCost() {
-        return null;
+        return this.cost;
     }
 
     @Override
     public String getCharacter() {
         return character;
+    }
+    @Override
+    public String toString() {
+        return "Волк";
     }
 }

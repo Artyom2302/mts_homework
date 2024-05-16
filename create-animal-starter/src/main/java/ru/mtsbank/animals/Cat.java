@@ -1,5 +1,6 @@
 package ru.mtsbank.animals;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import ru.mtsbank.abstractClasses.Pet;
 
 
@@ -33,5 +34,10 @@ public class Cat extends Pet {
     @Override
     public String getCharacter() {
         return character;
+    }
+
+    @Override
+    public String toString() {
+        return "Кошка";
     }
 }

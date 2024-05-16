@@ -1,10 +1,12 @@
 package ru.mtsbank.animals;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import ru.mtsbank.abstractClasses.Predator;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@JsonTypeName("Shark")
 public class Shark extends Predator {
     public Shark(String breed, String name, String character, LocalDate birthDate){
         this.name = name;
@@ -26,11 +28,15 @@ public class Shark extends Predator {
 
     @Override
     public BigDecimal getCost() {
-        return null;
+        return this.cost;
     }
 
     @Override
     public String getCharacter() {
         return character;
+    }
+    @Override
+    public String toString() {
+        return "Акула";
     }
 }
