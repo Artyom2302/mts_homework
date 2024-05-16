@@ -1,5 +1,7 @@
 package ru.mtsbank.animals;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -8,6 +10,8 @@ import java.time.LocalDate;
  * @author Artem
  * @version 1.0
  * */
+
+
 public interface Animal {
 
     /**
@@ -34,5 +38,11 @@ public interface Animal {
      * */
     String getCharacter();
     LocalDate getBirthDate();
+    /**
+     * Метод реализует получение секретной информации о животном
+     * @return Возвращает строку, содержащую сектетную информацию о животном
+     * */
+    String getSecretInformation();
+    void setSecretInformation(String secretInformation);
     public void setBirthDate(LocalDate birthDate);
 }
