@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static java.lang.Math.round;
 
@@ -50,20 +51,21 @@ public interface CreateAnimalService {
     default Animal createRandomAnimal(AnimalType type){
         Animal animal = null;
         switch (type){
+            //Добавил Random #, чтобы не было Dublicate key exception при добавлении в map по имени
             case DOG:{
-                animal = new Dog("Хаски","Собака", BigDecimal.valueOf(3000),"Добрый",LocalDate.now().minusDays((long)(365*5*Math.random())));
+                animal = new Dog("Хаски","Собака #" + (int)(365*Math.random()), BigDecimal.valueOf(3000),"Добрый",LocalDate.now().minusDays((long)(365*5*Math.random())));
                 break;
             }
             case CAT:{
-                animal = new Cat("Британец","Кошка", BigDecimal.valueOf(2000),"Гордый",LocalDate.now().minusDays((long)(365*5*Math.random())));
+                animal = new Cat("Британец","Кошка #" + (int)(365*Math.random()), BigDecimal.valueOf(2000),"Гордый",LocalDate.now().minusDays((long)(365*5*Math.random())));
                 break;
             }
             case WOLF:{
-                animal = new Wolf("Северный","Волк","Злой",LocalDate.now().minusDays((long)(365*5*Math.random())));
+                animal = new Wolf("Северный","Волк #" + (int)(365*Math.random()),"Злой",LocalDate.now().minusDays((long)(365*5*Math.random())));
                 break;
             }
             case SHARK:{
-                animal = new Shark("Молот","Акула","Опасная",LocalDate.now().minusDays((long)(365*5*Math.random())));
+                animal = new Shark("Молот","Акула #" + (int)(365*Math.random()),"Опасная",LocalDate.now().minusDays((long)(365*5*Math.random())));
                 break;
             }
         }
@@ -71,7 +73,7 @@ public interface CreateAnimalService {
     }
     Animal getRandomAnimal();
     default Map<String, List<Animal>> createAnimals(){
-        var result = new HashMap<String,List<Animal>>();
+        var result = new ConcurrentHashMap<String,List<Animal>>();
         for (int j = 0; j < 3; j++) {
             AnimalType animalType = getRandomAnimalType();
             List<Animal> animals = new ArrayList<>();

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class CreateAnimalServiceImpl implements CreateAnimalService {
@@ -16,8 +18,6 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
 
 
     private CreateServiceProperties props;
-
-
 
     CreateAnimalService.AnimalType type;
 
@@ -41,21 +41,22 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
     public Animal getRandomAnimal(){
         Animal animal =CreateAnimalService.super.createRandomAnimal(type);
         if (animal instanceof Cat){
-            ((Cat) animal).setName(getRandomName(props.getCatNames()));
+            ((Cat) animal).setName(getRandomName(props.getCatNames()) + " #" +(int)(365*Math.random()));
         }
         if (animal instanceof Dog){
-            ((Dog) animal).setName(getRandomName(props.getDogNames()));
+            ((Dog) animal).setName(getRandomName(props.getDogNames())  + " #" +(int)(365*Math.random()));
         }
+        animal.setSecretInformation(FileWorkService.getStringFromSecretInfo());
         return animal;
     }
 
     @Override
     public Map<String, List<Animal>> createAnimals() {
-        var result = new HashMap<String,List<Animal>>();
+        var result = new ConcurrentHashMap<String,List<Animal>>();
         for (int i = 0; i < 3; i++) {
             int j = 0;
             AnimalType animalType = getRandomAnimalType();
-            List<Animal> animals = new ArrayList<>();
+            List<Animal> animals = new CopyOnWriteArrayList<>();
             do {
                 animals.add(createRandomAnimal(animalType));
                 j++;
@@ -67,7 +68,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
 
 
     public Map<String, List<Animal>> createAnimals(int number){
-        var result = new HashMap<String,List<Animal>>();
+        var result = new ConcurrentHashMap<String,List<Animal>>();
         for (int i = 0; i < number; i++) {
             AnimalType animalType = getRandomAnimalType();
             List<Animal> animals;
@@ -75,11 +76,10 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
                 animals= result.get(animalType.getTypeName());
             }
             else {
-                animals = new ArrayList<>();
+                animals = new CopyOnWriteArrayList<>();
                 result.put(animalType.getTypeName(),animals);
             }
             animals.add(createRandomAnimal(animalType));
-
         }
         return result;
     }
