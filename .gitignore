@@ -1,10 +1,12 @@
-# From https://github.com/github/gitignore/blob/master/Gradle.gitignore
+
 .gradle
-/build/
-/.idea/
+out
+.idea
+
 gradle
 build.gradle
 gradlew
 gradlew.bat
-HW1.iml
+mts_homework.iml
+
 settings.gradle
