@@ -1,10 +1,12 @@
 package ru.mtsbank.animals;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import ru.mtsbank.abstractClasses.Pet;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@JsonTypeName("Dog")
 public class Dog extends Pet {
     public Dog(String breed, String name, BigDecimal cost, String character, LocalDate birthDate){
         this.name = name;

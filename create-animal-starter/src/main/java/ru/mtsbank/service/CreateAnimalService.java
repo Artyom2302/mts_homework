@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static java.lang.Math.round;
 
@@ -72,7 +73,7 @@ public interface CreateAnimalService {
     }
     Animal getRandomAnimal();
     default Map<String, List<Animal>> createAnimals(){
-        var result = new HashMap<String,List<Animal>>();
+        var result = new ConcurrentHashMap<String,List<Animal>>();
         for (int j = 0; j < 3; j++) {
             AnimalType animalType = getRandomAnimalType();
             List<Animal> animals = new ArrayList<>();

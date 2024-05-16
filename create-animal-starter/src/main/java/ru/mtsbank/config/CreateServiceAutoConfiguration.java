@@ -27,5 +27,4 @@ public class  CreateServiceAutoConfiguration {
     AnimalRepositoryScheduler createScheduler(){
         return new AnimalRepositoryScheduler();
     }
-
 }
