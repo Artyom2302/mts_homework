@@ -1,6 +1,5 @@
 package ru.mtsbank.util;
 
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -12,11 +11,10 @@ import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
-import ru.mtsbank.abstractClasses.AbstractAnimal;
 import ru.mtsbank.animals.*;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -131,7 +129,7 @@ public class AnimalObjectMapper {
         }
     }
 
-    static public ObjectMapper objectMapper = new ObjectMapper();
+    public ObjectMapper objectMapper = new ObjectMapper();
 
     @PostConstruct
     void configure(){
