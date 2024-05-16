@@ -1,0 +1,5 @@
+properties:
+  animal:
+    names:
+      catNames: persik-Test,barsik-Test,pushok-Test
+      dogNames: sharik-Test,persik-Test,sobaka-Test

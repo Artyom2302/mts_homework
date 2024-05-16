@@ -1,11 +1,12 @@
-.gradle
+
 out
 .idea
 gradle
 
 gradlew
 gradlew.bat
-mts_homework.iml
-settings.gradle
-HW1.iml
+
+
+*.iml
 build
+/.gradle/
