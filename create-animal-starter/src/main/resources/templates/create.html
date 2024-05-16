@@ -1,0 +1,21 @@
+</head>
+<body>
+<form action="#" th:action="@{/creatures}" th:method="POST" th:object="${creature}">
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}"><br>
+
+    <label for="age">Age:</label>
+    <input type="text" id="age" th:field="*{age}"><br>
+
+    <label for="typeId">TypeId:</label>
+    <input type="text" id="typeId" th:field="*{typeId}"><br>
+
+
+    <label for="birthDate">BirthDate:</label>
+    <input type="text" id="birthDate" th:field="*{birthDate}"><br>
+    <input type="submit" name="action" value="create">
+    <input type="submit" name="action" value="cancel">
+</form>
+</body>
+</html>
