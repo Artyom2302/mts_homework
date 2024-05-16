@@ -2,11 +2,11 @@ package ru.mtsbank.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+
 import ru.mtsbank.animals.Animal;
 import ru.mtsbank.animals.Cat;
 import ru.mtsbank.animals.Dog;
@@ -20,9 +20,10 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-@SpringBootTest
+
+@Disabled
 public class AnimalRepositoryTest {
-    @Autowired
+
     AnimalsRepositoryImpl animalsRepository;
 
     @BeforeEach

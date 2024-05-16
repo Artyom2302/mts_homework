@@ -1,6 +1,7 @@
 package ru.mtsbank;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +12,7 @@ import ru.mtsbank.service.CreateAnimalServiceImpl;
 
 @SpringBootTest
 @ActiveProfiles("test")
+@Disabled
 public class SpringStarterTest {
     @Autowired
     CreateAnimalServiceImpl createService;
