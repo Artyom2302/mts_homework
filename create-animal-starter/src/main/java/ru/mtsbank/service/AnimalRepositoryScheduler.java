@@ -1,27 +1,22 @@
 package ru.mtsbank.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
-import ru.mtsbank.animals.Animal;
-import ru.mtsbank.dao.Creature;
-import ru.mtsbank.dao.CreatureDAO;
+import ru.mtsbank.entity.Creature;
 import ru.mtsbank.exceptions.ArraySizeException;
-import ru.mtsbank.exceptions.MinAgeException;
 
-import javax.annotation.PostConstruct;
-import java.sql.SQLException;
-import java.time.LocalDate;
+
 import java.util.List;
-import java.util.Map;
 
 
 public class AnimalRepositoryScheduler {
     @Autowired
     FileWorkService fileWorkService;
     @Autowired
-    CreatureDAO creatureDAO;
+    CreatureService creatureService;
+
 
     @PostConstruct
     void threadStart(){
@@ -60,7 +55,7 @@ public class AnimalRepositoryScheduler {
         threadFindAverageAge.start();
     }
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 10000)
     void doTask(){
 //        try {
 //        //Вызов методов
@@ -129,16 +124,11 @@ public class AnimalRepositoryScheduler {
 //        } catch (JsonProcessingException e) {
 //            System.out.println("Ошибка в обработке Json");
 //        }
-
-        try {
-            List<Creature> result = creatureDAO.getCreature();
+            System.out.println("Поиск животных");
+            List<Creature> result = creatureService.findAll();
             for(Creature creature: result){
                 System.out.println(creature);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Ошибка БД");
-            throw new RuntimeException(e);
-        }
+
     }
 }

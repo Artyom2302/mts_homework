@@ -1,14 +1,11 @@
 package ru.mtsbank.service;
 
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import ru.mtsbank.dao.Creature;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import org.springframework.stereotype.Service;
+
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class JDBCService {

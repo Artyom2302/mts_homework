@@ -1,23 +1,23 @@
-insert into animal_type(type,is_wild) 
+insert into animals.animal_type(type,is_wild)
 values ('Собака',false),
 ('Кошка',false),
 ('Волк',true);
 
-insert into habitat (area_name)
+insert into animals.habitat (area_name)
 values ('Дом'),
 ('Квартира'),
 ('Лес'),
 ('Море')
 
-insert into provider (name,phone)
+insert into animals.provider (name,phone)
 values('Вася',5692344),
 ('Петя',5692345)
 
-insert into creature (name,type_id,age,birth_date)
+insert into animals.creature (name,type_id,age,birth_date)
 values ('Барсик',3,4,now() - interval '4 years'),
 ('Шарик',2,5,now() - interval '5 years'),
 ('Акула №1',1,2,now() - interval '2 years'),
-('Волк №2',4,5,now() - interval '5 years')
+('Волк №2',4,5,now() - interval '5 years');
 
 insert into animals_habitats(id_animal_type,id_area)
 values (1,4),

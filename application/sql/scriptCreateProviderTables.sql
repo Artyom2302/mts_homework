@@ -4,7 +4,7 @@ create table provider(
 	phone nchar(50),
 
 	constraint PK_provider primary key(id_provider)
-)
+);
 
 create table animal_providers(
 	id_animal_type bigint,
