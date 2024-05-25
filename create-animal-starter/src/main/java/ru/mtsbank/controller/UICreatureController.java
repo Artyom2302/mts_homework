@@ -31,7 +31,7 @@ public class UICreatureController {
         return "create";
     }
 
-    @Logging(value = "post method",entering = false,exiting = true)
+    @Logging(value = "post method",entering = false,exiting = true,level = "ERROR")
     @PostMapping(params = "action=create")
     public String post(Model model,Creature creature){
         creatureRepository.save(creature);
