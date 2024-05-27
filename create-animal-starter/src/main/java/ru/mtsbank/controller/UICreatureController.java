@@ -33,7 +33,7 @@ public class UICreatureController {
 
     @Logging(value = "post method",entering = false,exiting = true,level = "ERROR")
     @PostMapping(params = "action=create")
-    public String post(Model model,Creature creature){
+    public String post(Creature creature){
         creatureRepository.save(creature);
         return "redirect:/creatures";
     }
