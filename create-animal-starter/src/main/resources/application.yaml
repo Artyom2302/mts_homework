@@ -10,9 +10,14 @@ spring:
     password: "1234"
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     show-sql: true
+
+
   flyway:
     user: "postgres"
     password: "1234"
     default-schema: "animals"
+jwt:
+  secret: eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcxNjc5NTYxOCwiaWF0IjoxNzE2Nzk1NjE4fQ
+  lifetime: 2000m
